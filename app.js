@@ -5,10 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const http = require('http');
 const { connectToMongoDB } = require('./db/BD');
- 
+
+var commandeRouter=require('./routes/commandeRouter'); 
 var osRouter= require('./routes/os');
 var userRouter=require('./routes/userRouter');
 var menuRouter=require('./routes/menuRouter');
+var platRouter=require('./routes/platRouter');
+var avisRouter=require('./routes/avisRouter');
+var paiementRouter=require('./routes/paiementRouter');
 
 var app = express();
 
@@ -23,8 +27,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/os', osRouter);
 app.use('/user',userRouter);
 app.use('/menu',menuRouter);
+app.use('/commande',commandeRouter);
+app.use('/plat',platRouter);
+app.use('/avis',avisRouter);
+app.use('/paiement',paiementRouter);
 
-// catch 404 and forward to error handler
+
+
 app.use(function(req, res, next) {
   next(createError(404));
 });

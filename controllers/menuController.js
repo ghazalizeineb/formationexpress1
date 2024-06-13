@@ -20,7 +20,7 @@ module.exports.getmenu= async (req,res)=>{
         if(menu.length===0 &&!menu){
             throw new Error("No menu found");
         }
-        res.status(200).json({users}); 
+        res.status(200).json({menu}); 
 
 
 
