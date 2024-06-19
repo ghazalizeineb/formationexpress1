@@ -3,8 +3,10 @@ const platSchema= new mongoose.Schema({
     nom:String,
     description:String,
     prix:Number,
-    //idmenu
+    image_plat:{type:String,required:true ,default:"plat.png"},
 
+menu:{ type:mongoose.Schema.Types.ObjectId,ref:'menu'} ,
+avis:[{type:mongoose.Schema.Types.ObjectId,ref:'avis'}]
 
 
 

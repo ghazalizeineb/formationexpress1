@@ -6,10 +6,11 @@ const mongoose=require('mongoose');
          catégorie:String,
          prix:Number,
     
-         image_Menu:{type:String,required:false,default:"menu.png"}
+         image_Menu:{type:String,required:false,default:"menu.png"},
 
+         plat:[{ type:mongoose.Schema.Types.ObjectId,ref:'plat'}]
 
-    },{timestamps:true}
+     }
 
  );
     

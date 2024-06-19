@@ -3,14 +3,22 @@ const mongoose=require('mongoose');
  const userShcema=new mongoose.Schema(
      {
         name:String,
-        email:String,
+        age:Number,
+          email:{ 
+         type:String ,
+          unique:true,
+          required:true,
+          //match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address']
+
+         },
          password:String,
         role:{
              type:String,
              enum:['admin','client']
          },
-         image_User:{type:String,required:false,default:"client.png"}
-
+         image_User:{type:String,required:false,default:"client.png"},
+         avis:[{ type:mongoose.Schema.Types.ObjectId,ref:'avis'}],
+         commande:[{ type:mongoose.Schema.Types.ObjectId,ref:'commande'}]
 
     },{timestamps:true}
 

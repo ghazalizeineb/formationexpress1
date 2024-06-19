@@ -3,8 +3,15 @@ var router = express.Router();
 const userController=require('../controllers/userController');
 const upload =require('../middlewares/uploadfile');
 router.get('/getallusers',userController.getUsers);
+router.get('/getage/:age',userController.getAge);
+
+router.get('/getallusertri',userController.getUsersTri);
 router.get('/getuserbyid/:id',userController.getUsersByID);
-router.post('/adduser',userController.addUser);
+
+router.get('/getAgebetweenXY',userController.getAgebetweenXY);
+router.get('/serachuserbyname',userController.searchUserByName);
+router.post('/adduserClient',userController.addUserClient);
+router.post('/adduserAdmin',userController.addUserAdmin);
 router.post('/adduserwithfile',upload.single("image_User"),userController.addUserwithfile);
 router.put('/updateuser/:id',userController.updateUser);
 router.put('/updatepassword/:id',userController.updatepassword);

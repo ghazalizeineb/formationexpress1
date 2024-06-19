@@ -4,7 +4,7 @@ const CommandeSchema=new mongoose.Schema(
     date:String,
     statut:String,
     montantTotal:Number,
-    //userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'user' }
 
 
 })
