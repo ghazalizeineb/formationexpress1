@@ -4,7 +4,8 @@ const CommandeSchema=new mongoose.Schema(
     date:String,
     statut:String,
     montantTotal:Number,
-    user:{type:mongoose.Schema.Types.ObjectId,ref:'user' }
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'user' },
+    plat:[{ type:mongoose.Schema.Types.ObjectId,ref:'plat'}]
 
 
 })

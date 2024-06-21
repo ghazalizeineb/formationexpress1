@@ -1,5 +1,6 @@
 const platModel =require('../models/platModel');
 const menuModel=require('../models/menuModel');
+const commandeModel=require('../models/commandeModel');
 
 module.exports.addplat=async(req,res)=>{
     const { nom ,description,prix,menuID}=req.body;
@@ -7,16 +8,18 @@ module.exports.addplat=async(req,res)=>{
     console.log(req.body);
 
     try{
-        const plat=new  platModel({nom,description,prix,menu:menuID,image_plat:filename,});
+        const plat=new  platModel({nom,description,prix,menu:menuID,image_plat:filename});
         const menu=await menuModel.findById(menuID);
         if(!menu){
             throw new Error ("menu not found"); 
         }
-
+       
         await menuModel.findByIdAndUpdate(menuID,{
-            $push:{plat: plat._id},
+            $push:{plat: plat._id}})
 
-        });
+         
+
+       
         const addedplat=await plat.save();
         res.status(201).json({addedplat});
         
@@ -30,7 +33,7 @@ module.exports.addplat=async(req,res)=>{
 module.exports.getAllplats=async(req,res)=> {
 
     try{
-        const plat=await platModel.find();
+        const plat=await platModel.find().populate('menu');
         if(plat.length===0 && !plat){
             throw new Error("plat not found");
         }

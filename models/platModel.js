@@ -6,7 +6,8 @@ const platSchema= new mongoose.Schema({
     image_plat:{type:String,required:true ,default:"plat.png"},
 
 menu:{ type:mongoose.Schema.Types.ObjectId,ref:'menu'} ,
-avis:[{type:mongoose.Schema.Types.ObjectId,ref:'avis'}]
+avis:[{type:mongoose.Schema.Types.ObjectId,ref:'avis'}],
+commande:{type:mongoose.Schema.Types.ObjectId,ref:'commande'}
 
 
 

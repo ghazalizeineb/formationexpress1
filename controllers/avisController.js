@@ -1,8 +1,9 @@
 const avisModel=require('../models/avisModel');
 const userModel=require('../models/userModel');
+const platModel=require('../models/platModel');
 
 module.exports.addAvis = async (req, res) => {
-    const { note, commentaire, userID } = req.body;
+    const { note, commentaire, userID ,platID } = req.body;
     console.log(req.body);
 
     try {
@@ -10,13 +11,21 @@ module.exports.addAvis = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
+        const plat = await platModel.findById(platID);
+        if (!plat) {
+            return res.status(404).json({ message: "plat not found" });
+        }
 
-        const avis = new avisModel({ note, commentaire, user: userID });
+        const avis = new avisModel({ note, commentaire, user: userID ,plat:platID});
 
         const addedAvis = await avis.save();
 
         await userModel.findByIdAndUpdate(
             userID,
+            { $push: { avis: addedAvis._id } }
+        );
+        await platModel.findByIdAndUpdate(
+            platID,
             { $push: { avis: addedAvis._id } }
         );
 
@@ -29,7 +38,7 @@ module.exports.addAvis = async (req, res) => {
 module.exports.getAllavis=async(req,res)=>{
 
     try{
-        const avis=await avisModel.find().populate('user');
+        const avis=await avisModel.find().populate('user').populate('plat');
         if(avis.length===0 && !avis){
             throw new Error("Not found avis");
         }
@@ -45,7 +54,7 @@ module.exports.getAllavis=async(req,res)=>{
 module.exports.getAvisByID = async (req, res) => {
     try {
         const { id } = req.params;
-        const avis = await avisModel.findById(id).populate('user');
+        const avis = await avisModel.findById(id).populate('user').populate('plat');
 
         if (!avis) {
             return res.status(404).json({ message: "Avis not found" });
@@ -65,7 +74,8 @@ module.exports.deleteavis=async(req,res)=>{
             throw new Error("avis not found");}
           const avis=  await avisModel.findByIdAndDelete(id);
 
-        await userModel.updateMany({},{$pull:{avis:avis._id}})
+        await userModel.updateMany({},{$pull:{avis:avis._id}});
+        await platModel.updateMany({},{$pull:{avis:avis._id}});
         res.status(200).json("deleted");
 
     }catch(error){
