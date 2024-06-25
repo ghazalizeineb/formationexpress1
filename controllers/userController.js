@@ -1,6 +1,13 @@
 const userModel= require('../models/userModel');
 const bcrypt=require('bcrypt');
+const jwt =require('jsonwebtoken');
+const maxAge=2*60*60
 
+const createToken=(id)=>{
+
+        return jwt.sign({id},process.env.net_secret,{expiresIn:maxAge})
+
+}
 module.exports.addUserClient=async(req,res)=>{
     const {name,email,password,age}=req.body;
     const role ='client';
@@ -227,3 +234,32 @@ try{
 
 };
 
+
+module.exports.login=async(req,res)=>{
+    try{
+        const {email,password}=req.body;
+        const user=await userModel.login(email,password);
+        const token=createToken(user._id);
+        console.log(token);
+        res.cookie('this_is_token',token,{httpOnly:false,maxAge:maxAge*1000});
+        res.status(200).json({user})
+
+    }catch(error){
+        res.status(500).json({message:error.message}
+        )
+    }
+
+}
+
+
+module.exports.logout=async(req,res)=>{
+    try{ 
+       //const id = req.session.user._id
+    //await userModel.findByIdAndUpdate({id: user._id},{statu : true});
+        res.cookie('this_is_token',"",{httpOnly:false,maxAge:1});
+        res.status(200).json('logout');
+    }catch(error){
+        res.status(500).json({message:error.message})
+    }
+
+}

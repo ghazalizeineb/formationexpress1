@@ -8,7 +8,7 @@ const mongoose=require('mongoose');
          type:String ,
           unique:true,
           required:true,
-          //match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address']
+         match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address']
 
          },
          password:String,

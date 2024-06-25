@@ -16,7 +16,7 @@ module.exports.addpaiement = async (req, res) => {
 
         const addedpaiement = await paiement.save();
 
-        await commandeModel.findByIdAndUpdate(id_commande, { $push: { paiement: addedpaiement._id } });
+        await commandeModel.findByIdAndUpdate(id_commande, { paiement: addedpaiement._id });
         res.status(201).json({ addedpaiement });
 
     } catch (error) {
@@ -26,7 +26,7 @@ module.exports.addpaiement = async (req, res) => {
 module.exports.getAllpaiement=async(req,res)=>{
 
     try{
-        const paiement=(await paiementModel.find()).populate('commande');
+        const paiement=await paiementModel.find().populate('commande');
         if(paiement.length===0 && !paiement){
             throw new Error("paiement not found");
         }

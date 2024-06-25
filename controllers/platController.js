@@ -98,9 +98,9 @@ module.exports.updatePlat = async (req, res) => {
             const { filename } = req.file;
             updateFields.image_plat = filename;
       
-            //  if (checkPlat.image_plat && fs.existsSync(`public/images${checkPlat.image_plat}`)) {
-            //    fs.unlinkSync(`public/images${checkPlat.image_plat}`);
-            //  }
+            //   if (checkPlat.image_plat && fs.existsSync(`public/images${checkPlat.image_plat}`)) {
+            //     fs.unlinkSync(`public/images${checkPlat.image_plat}`);
+            //   }
            }
           console.log(updateFields);
 

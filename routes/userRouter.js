@@ -2,12 +2,16 @@ var express = require('express');
 var router = express.Router();
 const userController=require('../controllers/userController');
 const upload =require('../middlewares/uploadfile');
-router.get('/getallusers',userController.getUsers);
-router.get('/getage/:age',userController.getAge);
+const {requireAuthUser}=require('../middlewares/authentification');
 
+
+router.get('/login',userController.login); 
+router.get('/logout',userController.logout);
+
+router.get('/getallusers',requireAuthUser,userController.getUsers);
+router.get('/getage/:age',userController.getAge);
 router.get('/getallusertri',userController.getUsersTri);
 router.get('/getuserbyid/:id',userController.getUsersByID);
-
 router.get('/getAgebetweenXY',userController.getAgebetweenXY);
 router.get('/serachuserbyname',userController.searchUserByName);
 router.post('/adduserClient',userController.addUserClient);
