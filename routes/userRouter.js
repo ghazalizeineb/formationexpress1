@@ -7,6 +7,7 @@ const {requireAuthUser}=require('../middlewares/authentification');
 
 router.get('/login',userController.login); 
 router.get('/logout',userController.logout);
+router.get('/getuserauth',requireAuthUser,userController.getUserAuth);
 
 router.get('/getallusers',requireAuthUser,userController.getUsers);
 router.get('/getage/:age',userController.getAge);

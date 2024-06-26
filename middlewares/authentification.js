@@ -12,8 +12,8 @@ module.exports.requireAuthUser=async(req,res,next)=>{
             if(error){
                 res.status(401).json("problem decoding token")
             }else{
-                console.log("token",decodedToken);
-                console.log("decodedToken",decodedToken.id);
+                //console.log("token",decodedToken);
+                //console.log("decodedToken",decodedToken.id);
 
                 user=await userModel.findById(decodedToken.id)
                 console.log("user",user);

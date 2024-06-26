@@ -263,3 +263,18 @@ module.exports.logout=async(req,res)=>{
     }
 
 }
+module.exports.getUserAuth= async (req,res)=>{
+    try{
+        const id=req.session.user._id ;
+        const users= await userModel.findById(id).populate('avis').populate('commande');
+        if(users.length===0 && !users){
+            throw new Error("No users found");
+        }
+        res.status(200).json({users}); 
+
+
+
+    }catch(error){
+        res.status(500).json({message:error.message});
+    }}
+    
