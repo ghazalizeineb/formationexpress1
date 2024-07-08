@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const http = require('http');
 const { connectToMongoDB } = require('./db/BD');
-const session=require('express-session')
+const session=require('express-session');
+const detailedLogger=require('./middlewares/logs');
 
 var commandeRouter=require('./routes/commandeRouter'); 
 var osRouter= require('./routes/os');
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(detailedLogger);
 
 app.use(session({
   secret:process.env.net_secret,
@@ -59,6 +61,6 @@ app.use(function(err, req, res, next) {
 });
 
 const server = http.createServer(app);
-server.listen(process.env.PORT, () => {connectToMongoDB(),console.log("app is running on port 5000 ,")} )
+server.listen(process.env.PORT, () => {connectToMongoDB(),console.log("app is running on port 5000 ,")})
 
 module.exports = app;
