@@ -4,9 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const http = require('http');
+const cors =require('cors')
 const { connectToMongoDB } = require('./db/BD');
 const session=require('express-session');
-const detailedLogger=require('./middlewares/logs');
+// const detailedLogger=require('./middlewares/logs');
 
 var commandeRouter=require('./routes/commandeRouter'); 
 var osRouter= require('./routes/os');
@@ -25,7 +26,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(detailedLogger);
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'Credentials'],
+  credentials: true
+}));
+// app.use(detailedLogger);
 
 app.use(session({
   secret:process.env.net_secret,

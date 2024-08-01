@@ -3,13 +3,13 @@ var router = express.Router();
 const userController=require('../controllers/userController');
 const upload =require('../middlewares/uploadfile');
 const {requireAuthUser}=require('../middlewares/authentification');
-const validateUser=require('../middlewares/valider');
+// const validateUser=require('../middlewares/valider');
 
-router.get('/login', validateUser,userController.login); 
+router.get('/login', userController.login); 
 router.get('/logout',userController.logout);
 router.get('/getuserauth',requireAuthUser,userController.getUserAuth);
 
-router.get('/getallusers',requireAuthUser,userController.getUsers);
+router.get('/getallusers',userController.getallUsers);
 router.get('/getage/:age',userController.getAge);
 router.get('/getallusertri',userController.getUsersTri);
 router.get('/getuserbyid/:id',userController.getUsersByID);

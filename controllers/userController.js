@@ -57,7 +57,7 @@ module.exports.addUserAdmin=async(req,res)=>{
 
 
 
-module.exports.getUsers= async (req,res)=>{
+module.exports.getallUsers= async (req,res)=>{
     try{
         const users= await userModel.find();
         if(users.length===0 &&! users){
